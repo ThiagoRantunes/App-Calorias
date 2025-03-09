@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css"/>
+    <title>App Calorias</title>
+</head>
+<body>
+    
+  <ion-header>
+    <ion-toolbar>
+      <ion-row>
+        <ion-title>
+          App Calorias
+        </ion-title>
+        <ion-col class="ion-text-right">
+            <ion-button id="open-modal" expand="block">Cadastrar</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-modal trigger="open-modal">
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button onclick="cancel()">Cancel</ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+          <ion-button onclick="confirm()" id="present-alert" strong="true">Confirm</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-item>
+        <ion-input label="Quantas calorias" label-placement="stacked" type="text" placeholder="Digite aqui..."></ion-input>
+      </ion-item>
+    </ion-content>
+  </ion-modal>  
+
+  <ion-alert
+  trigger="present-alert"
+  header="Calorias cadastradas"
+  message="Você consumiu * calorias"
+  ></ion-alert>
+  
+
+  <script>
+
+    const alert = document.querySelector("ion-alert");
+    alert.buttons = ["Aceitar"]
+
+    var modal = document.querySelector('ion-modal');
+  
+    function cancel() {
+      modal.dismiss(null, 'cancel');
+    }
+  
+    function confirm() {
+      const input = document.querySelector('ion-input');
+      modal.dismiss(input.value, 'confirm');
+    }
+  
+    modal.addEventListener('willDismiss', (event) => {
+      if (event.detail.role === 'confirm') {
+        const message = document.querySelector('#message');
+        message.textContent = `Hello ${event.detail.data}!`;
+      }
+    });
+  </script>
+
+</body>
+</html>
