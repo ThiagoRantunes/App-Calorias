@@ -23,6 +23,12 @@
     </ion-toolbar>
   </ion-header>
 
+  <ion-content class="ion-text-center">
+    <ion-text>
+      <h1 id="content-calorias"></h1>
+    </ion-text>
+  </ion-content>
+
   <ion-modal trigger="open-modal">
     <ion-header>
       <ion-toolbar>
@@ -36,7 +42,10 @@
     </ion-header>
     <ion-content class="ion-padding">
       <ion-item>
-        <ion-input label="Quantas calorias" label-placement="stacked" type="text" placeholder="Digite aqui..."></ion-input>
+        <ion-input id="input-calorias" label="Alimento" label-placement="stacked" type="text" placeholder="Digite aqui..."></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input id="input-calorias" label="Quantas calorias" label-placement="stacked" type="number" placeholder="Digite aqui..."></ion-input>
       </ion-item>
     </ion-content>
   </ion-modal>  
@@ -46,9 +55,12 @@
   header="Calorias cadastradas"
   message="Você consumiu * calorias"
   ></ion-alert>
-  
 
   <script>
+
+    const inputCalorias = document.getElementById("input-calorias");
+
+    const contentCalorias = document.getElementById("content-calorias");
 
     const alert = document.querySelector("ion-alert");
     alert.buttons = ["Aceitar"]
@@ -62,6 +74,7 @@
     function confirm() {
       const input = document.querySelector('ion-input');
       modal.dismiss(input.value, 'confirm');
+      contentCalorias.innerText = inputCalorias.value + " Calorias";
     }
   
     modal.addEventListener('willDismiss', (event) => {
@@ -70,7 +83,10 @@
         message.textContent = `Hello ${event.detail.data}!`;
       }
     });
+
+    
   </script>
 
-</body>
-</html>
+<body>
+    
+  
