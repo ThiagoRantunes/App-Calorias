@@ -36,27 +36,36 @@
           <ion-button onclick="cancel()">Cancel</ion-button>
         </ion-buttons>
         <ion-buttons slot="end">
-          <ion-button onclick="confirm()" id="present-alert" strong="true">Confirm</ion-button>
+          <ion-button onclick="confirm()" strong="true">Confirm</ion-button>
+          <ion-button id="present-alert"></ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
       <ion-item>
-        <ion-input id="input-calorias" label="Alimento" label-placement="stacked" type="text" placeholder="Digite aqui..."></ion-input>
+        <ion-input id="input-alimento" label="Alimento" label-placement="stacked" type="text" placeholder="Digite aqui..."></ion-input>
       </ion-item>
       <ion-item>
         <ion-input id="input-calorias" label="Quantas calorias" label-placement="stacked" type="number" placeholder="Digite aqui..."></ion-input>
       </ion-item>
     </ion-content>
-  </ion-modal>  
+  </ion-modal> 
+  <div class="activator" id="present-alert"></div> 
 
-  <ion-alert
-  trigger="present-alert"
-  header="Calorias cadastradas"
-  message="Você consumiu * calorias"
-  ></ion-alert>
+
 
   <script>
+
+    let teste = "Sa poha";
+
+    const body = document.querySelector("body");
+    body.innerHTML += `<ion-alert
+    trigger="present-alert"
+    header="Calorias cadastradas"
+    message="Você consumiu ${teste} calorias"
+    ></ion-alert>`
+
+    const alertMsg = document.getElementById("present-alert");
 
     const inputCalorias = document.getElementById("input-calorias");
 
@@ -75,6 +84,7 @@
       const input = document.querySelector('ion-input');
       modal.dismiss(input.value, 'confirm');
       contentCalorias.innerText = inputCalorias.value + " Calorias";
+      alertMsg.click();
     }
   
     modal.addEventListener('willDismiss', (event) => {
@@ -84,7 +94,6 @@
       }
     });
 
-    
   </script>
 
 <body>
