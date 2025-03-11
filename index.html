@@ -23,11 +23,23 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content class="ion-text-center">
-    <ion-text>
-      <h1 id="content-calorias"></h1>
-    </ion-text>
+<!-- CARDS -->
+
+  <ion-content id="card-content">
+
+    <!-- <ion-card>
+      <ion-card-header>
+        <ion-card-title>Calorias</ion-card-title>
+        <ion-card-subtitle id="card-subtitle">1000 Calorias</ion-card-subtitle>
+      </ion-card-header>
+    
+      <ion-card-content>
+       Você consumiu 100 calorias do alimento Banan!
+      </ion-card-content>
+    </ion-card> -->
+    
   </ion-content>
+
 
   <ion-modal trigger="open-modal">
     <ion-header>
@@ -43,39 +55,31 @@
     </ion-header>
     <ion-content class="ion-padding">
       <ion-item>
-        <ion-input id="input-alimento" label="Alimento" label-placement="stacked" type="text" placeholder="Digite aqui..."></ion-input>
+        <ion-input id="input-alimentos" label="Alimento" label-placement="stacked" type="text" placeholder="Digite aqui..."></ion-input>
       </ion-item>
       <ion-item>
         <ion-input id="input-calorias" label="Quantas calorias" label-placement="stacked" type="number" placeholder="Digite aqui..."></ion-input>
       </ion-item>
     </ion-content>
   </ion-modal> 
-  <div class="activator" id="present-alert"></div> 
 
-
+  <ion-alert
+    trigger="present-alert"
+    header="Calorias cadastradas"
+    ></ion-alert>
 
   <script>
 
-    let teste = "Sa poha";
-
-    const body = document.querySelector("body");
-    body.innerHTML += `<ion-alert
-    trigger="present-alert"
-    header="Calorias cadastradas"
-    message="Você consumiu ${teste} calorias"
-    ></ion-alert>`
-
     const alertMsg = document.getElementById("present-alert");
-
     const inputCalorias = document.getElementById("input-calorias");
-
-    const contentCalorias = document.getElementById("content-calorias");
+    const inputAlimentos = document.getElementById("input-alimentos");
+    var modal = document.querySelector('ion-modal');
+    const ionAlert = document.querySelector("ion-alert");
+    const contentCard = document.getElementById("card-content");
 
     const alert = document.querySelector("ion-alert");
     alert.buttons = ["Aceitar"]
 
-    var modal = document.querySelector('ion-modal');
-  
     function cancel() {
       modal.dismiss(null, 'cancel');
     }
@@ -83,8 +87,18 @@
     function confirm() {
       const input = document.querySelector('ion-input');
       modal.dismiss(input.value, 'confirm');
-      contentCalorias.innerText = inputCalorias.value + " Calorias";
       alertMsg.click();
+      ionAlert.message = "Você consumiu " + inputAlimentos.value + " calorias";
+      contentCard.innerHTML += `<ion-card>
+      <ion-card-header>
+        <ion-card-title>Calorias</ion-card-title>
+        <ion-card-subtitle id="card-subtitle">${inputCalorias.value} Calorias</ion-card-subtitle>
+      </ion-card-header>
+    
+      <ion-card-content>
+       Você consumiu ${inputCalorias.value} calorias do alimento ${inputAlimentos.value}
+      </ion-card-content>
+    </ion-card>`
     }
   
     modal.addEventListener('willDismiss', (event) => {
