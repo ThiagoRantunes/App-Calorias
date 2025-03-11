@@ -78,12 +78,15 @@
 
   <script>
 
+    const datatime = document.querySelector("ion-datatime");
     const alertMsg = document.getElementById("present-alert");
     const inputCalorias = document.getElementById("input-calorias");
     const inputAlimentos = document.getElementById("input-alimentos");
     var modal = document.querySelector('ion-modal');
     const ionAlert = document.querySelector("ion-alert");
     const contentCard = document.getElementById("card-content");
+
+    console.log(datatime.value)
 
     const alert = document.querySelector("ion-alert");
     alert.buttons = ["Aceitar"]
@@ -115,6 +118,22 @@
         message.textContent = `Hello ${event.detail.data}!`;
       }
     });
+
+    async function POST(alimento, calorias, data){
+
+      const response = await fetch("https", {
+        method: "POST",
+        body: JSON.stringify({"alimento":alimento, "calorias":calorias, "data":data}),
+        headers: {
+          "Content-Type":"application/json"
+        }
+      })
+
+      const data = await response.json();
+
+      console.log(data);
+
+    }
 
   </script>
 
