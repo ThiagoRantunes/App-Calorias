@@ -60,6 +60,14 @@
       <ion-item>
         <ion-input id="input-calorias" label="Quantas calorias" label-placement="stacked" type="number" placeholder="Digite aqui..."></ion-input>
       </ion-item>
+
+        <ion-datetime-button datetime="datetime" class="ion-padding-top"></ion-datetime-button>
+  
+        <ion-modal>
+          <ion-datetime id="datetime"></ion-datetime>
+        </ion-modal>
+
+
     </ion-content>
   </ion-modal> 
 
@@ -88,7 +96,7 @@
       const input = document.querySelector('ion-input');
       modal.dismiss(input.value, 'confirm');
       alertMsg.click();
-      ionAlert.message = "Você consumiu " + inputAlimentos.value + " calorias";
+      ionAlert.message = "Você consumiu " + inputCalorias.value + " calorias";
       contentCard.innerHTML += `<ion-card>
       <ion-card-header>
         <ion-card-title>Calorias</ion-card-title>
