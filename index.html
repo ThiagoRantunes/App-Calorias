@@ -23,19 +23,45 @@
     </ion-toolbar>
   </ion-header>
 
+<!-- LINHA DE OPÇÕES -->
+
+  <ion-row class="ion-padding-top ion-padding-bottom ion-display-block">
+    <ion-col class="ion-text-center">
+      <ion-label>Quantidade de Calorias Consumidas</ion-label>
+      <ion-progress-bar class="ion-margin-top"></ion-progress-bar>
+    </ion-col>
+    <!-- <ion-col>
+      <ion-datetime-button datetime="datetime"></ion-datetime-button>
+
+      <ion-modal>
+        <ion-datetime id="datetime" presentation="date"></ion-datetime>
+      </ion-modal>
+    </ion-col> -->
+  </ion-row>
+
 <!-- CARDS -->
 
   <ion-content id="card-content">
 
     <!-- <ion-card>
-      <ion-card-header>
-        <ion-card-title>Calorias</ion-card-title>
-        <ion-card-subtitle id="card-subtitle">1000 Calorias</ion-card-subtitle>
-      </ion-card-header>
-    
-      <ion-card-content>
-       Você consumiu 100 calorias do alimento Banan!
-      </ion-card-content>
+      <ion-row>
+        <ion-col>
+          <ion-card-header>
+            <ion-card-title>Calorias</ion-card-title>
+            <ion-card-subtitle id="card-subtitle">1000 Calorias</ion-card-subtitle>
+          </ion-card-header>
+        
+          <ion-card-content>
+           Você consumiu 100 calorias do alimento Banan!
+          </ion-card-content>
+          <ion-col>
+        </ion-col>
+        <ion-col>
+          <ion-button fill="outline" color="danger" onclick="deletecard(id)">
+            Deletar
+          </ion-button>
+        </ion-col>
+      </ion-row>
     </ion-card> -->
     
   </ion-content>
@@ -61,11 +87,11 @@
         <ion-input id="input-calorias" label="Quantas calorias" label-placement="stacked" type="number" placeholder="Digite aqui..."></ion-input>
       </ion-item>
 
-        <ion-datetime-button datetime="datetime" class="ion-padding-top"></ion-datetime-button>
+        <!-- <ion-datetime-button datetime="datetime" class="ion-padding-top"></ion-datetime-button>
   
         <ion-modal>
           <ion-datetime id="datetime"></ion-datetime>
-        </ion-modal>
+        </ion-modal> -->
 
 
     </ion-content>
@@ -78,15 +104,16 @@
 
   <script>
 
-    const datatime = document.querySelector("ion-datatime");
+    // BARRA DE PROGRESSO
+
+    let progress = 0;
+    let progressBar = document.querySelector('ion-progress-bar');
+
     const alertMsg = document.getElementById("present-alert");
     const inputCalorias = document.getElementById("input-calorias");
     const inputAlimentos = document.getElementById("input-alimentos");
     var modal = document.querySelector('ion-modal');
-    const ionAlert = document.querySelector("ion-alert");
     const contentCard = document.getElementById("card-content");
-
-    console.log(datatime.value)
 
     const alert = document.querySelector("ion-alert");
     alert.buttons = ["Aceitar"]
@@ -95,23 +122,42 @@
       modal.dismiss(null, 'cancel');
     }
   
+    const cardCont = 0;
+
     function confirm() {
       const input = document.querySelector('ion-input');
       modal.dismiss(input.value, 'confirm');
       alertMsg.click();
-      ionAlert.message = "Você consumiu " + inputCalorias.value + " calorias";
-      contentCard.innerHTML += `<ion-card>
-      <ion-card-header>
-        <ion-card-title>Calorias</ion-card-title>
-        <ion-card-subtitle id="card-subtitle">${inputCalorias.value} Calorias</ion-card-subtitle>
-      </ion-card-header>
-    
-      <ion-card-content>
-       Você consumiu ${inputCalorias.value} calorias do alimento ${inputAlimentos.value}
-      </ion-card-content>
+      alert.message = "Você consumiu " + inputCalorias.value + " calorias";
+      progressBar.value += inputCalorias.value / 3000;
+      contentCard.innerHTML += `<ion-card id="${cardCont}">
+      <ion-row>
+        <ion-col>
+          <ion-card-header>
+            <ion-card-title>Calorias</ion-card-title>
+            <ion-card-subtitle id="card-subtitle">${inputCalorias.value} Calorias</ion-card-subtitle>
+          </ion-card-header>
+        
+          <ion-card-content>
+           Você consumiu ${inputCalorias.value} calorias do alimento ${inputAlimentos.value}!
+          </ion-card-content>
+          <ion-col>
+        </ion-col>
+        <ion-col>
+          <ion-button fill="outline" color="danger" onclick="deletecard(${cardCont})">
+            Deletar
+          </ion-button>
+        </ion-col>
+      </ion-row>
     </ion-card>`
+    cardCont = cardCont + 1;
+    console.log(cardCont)
     }
   
+    function deletecard(id){
+      let teste = document.getElementById(id).remove()
+    }
+
     modal.addEventListener('willDismiss', (event) => {
       if (event.detail.role === 'confirm') {
         const message = document.querySelector('#message');
@@ -119,21 +165,24 @@
       }
     });
 
-    async function POST(alimento, calorias, data){
+    
 
-      const response = await fetch("https", {
-        method: "POST",
-        body: JSON.stringify({"alimento":alimento, "calorias":calorias, "data":data}),
-        headers: {
-          "Content-Type":"application/json"
-        }
-      })
 
-      const data = await response.json();
+    // async function POST(alimento, calorias, data){
 
-      console.log(data);
+    //   const response = await fetch("https", {
+    //     method: "POST",
+    //     body: JSON.stringify({"alimento":alimento, "calorias":calorias, "data":data}),
+    //     headers: {
+    //       "Content-Type":"application/json"
+    //     }
+    //   })
 
-    }
+    //   const data = await response.json();
+
+    //   console.log(data);
+
+    // }
 
   </script>
 
